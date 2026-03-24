@@ -6,15 +6,16 @@ function App() {
   const [room, setRoom] = useState("");
   const [username, setUsername] = useState("");
   const [messages, setMessages] = useState([]);
-  
+
   // Function to send a message to the server
   const sendMessage = () => {
-    socket.emit("message_from_client", {
-      message: msg,
-      room: room,
-      username: username,
-    });
-
+    if (msg != "" && username != "") {
+      socket.emit("message_from_client", {
+        message: msg,
+        room: room,
+        username: username,
+      });
+    }
     setMsg("");
   };
 
@@ -32,11 +33,10 @@ function App() {
 
     // CLEANUP FUNCTION
     return () => {
-    // Remove the listener for "message_from_server"
-    // This prevents duplicate listeners and memory leaks
-    socket.off("message_from_server");
-  };
-
+      // Remove the listener for "message_from_server"
+      // This prevents duplicate listeners and memory leaks
+      socket.off("message_from_server");
+    };
   }, [socket]);
 
   return (
