@@ -23,10 +23,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("draw", (data) => {
-    socket.to(data.room).emit("draw_from_server", {
-      x: data.x,
-      y: data.y,
-    });
+    socket.to(data.room).emit("draw_from_server", data);
   });
 });
 

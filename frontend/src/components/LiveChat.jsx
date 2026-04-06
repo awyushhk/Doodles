@@ -1,4 +1,24 @@
-const LiveChat = ({ messages, msg, setMsg, sendMessage }) => {
+import { useState, useEffect } from "react";
+
+const LiveChat = ({ socket, room, username }) => {
+  const [msg, setMsg] = useState("");
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    socket.on("message_from_server", (data) =>
+      setMessages((prev) => [...prev, data])
+    );
+
+    return () => socket.off("message_from_server");
+  }, []);
+
+  const sendMessage = () => {
+    if (msg !== "" && username !== "") {
+      socket.emit("message_from_client", { message: msg, room, username });
+    }
+    setMsg("");
+  };
+
   return (
     <div className="bg-white border border-gray-300 rounded-lg shadow-md w-80 h-[500px] flex flex-col">
 
@@ -26,7 +46,6 @@ const LiveChat = ({ messages, msg, setMsg, sendMessage }) => {
           type="text"
           placeholder="Type a message..."
         />
-
         <button
           className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition"
           onClick={sendMessage}
