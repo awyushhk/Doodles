@@ -1,3 +1,4 @@
-import { io } from "socket.io-client"
+import { io } from "socket.io-client";
 
-export const socket = io("http://localhost:5000")
+// In dev, Vite proxies this to 5000. In prod, both run on the same port anyway.
+export const socket = io("/", { transports: ["websocket"] });

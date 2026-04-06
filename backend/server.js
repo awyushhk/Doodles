@@ -1,21 +1,33 @@
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const app = express();
 const httpServer = createServer(app);
 
+const PORT = process.env.PORT || 5000;
+
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: "*",
     methods: ["GET", "POST"],
   },
+});
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+app.get(/.*/, (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
 });
 
 const roomPlayers = {}; // { roomId: [{ id, username, avatar, score }] }
 
 io.on("connection", (socket) => {
-
   socket.on("player_joined", ({ username, room, avatar }) => {
     socket.join(room);
 
@@ -48,4 +60,4 @@ io.on("connection", (socket) => {
   });
 });
 
-httpServer.listen(5000, () => console.log("Server is running..."));
+httpServer.listen(PORT, () => console.log(`Server is running on port ${PORT}...`));
