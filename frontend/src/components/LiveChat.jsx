@@ -9,8 +9,18 @@ const LiveChat = ({ socket, room, username }) => {
       setMessages((prev) => [...prev, data])
     );
 
-    return () => socket.off("message_from_server");
-  }, []);
+    socket.on("correct_guess", ({ username, points }) => {
+      setMessages((prev) => [
+         ...prev, 
+         { system: true, message: `${username} guessed the word! (+${points} pts)`}
+      ]);
+    });
+
+    return () => {
+      socket.off("message_from_server");
+      socket.off("correct_guess");
+    };
+  }, [socket]);
 
   const sendMessage = () => {
     if (msg !== "" && username !== "") {
@@ -30,8 +40,8 @@ const LiveChat = ({ socket, room, username }) => {
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-4 space-y-2">
         {messages.map((message, index) => (
-          <div key={index} className="text-sm">
-            <span className="font-semibold">{message.username}:</span>{" "}
+          <div key={index} className={`text-sm ${message.system ? 'text-green-600 font-bold italic' : ''}`}>
+            {!message.system && <span className="font-semibold">{message.username}: </span>}
             {message.message}
           </div>
         ))}

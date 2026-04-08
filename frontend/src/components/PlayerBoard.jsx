@@ -1,60 +1,58 @@
-const PlayerBoard = ({ players = [], currentId }) => {
+import { svgToDataUrl } from "./AvatarChanger";
 
+const PlayerBoard = ({ players = [], currentId }) => {
   return (
-    <div className="flex flex-col gap-1 w-52 overflow-y-auto max-h-full">
+    <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
       {players.map((player, i) => {
         const isYou = player.id === currentId;
+        const avatarSrc = player.avatar ? svgToDataUrl(player.avatar) : null;
         return (
           <div
             key={player.id}
-            className={`flex items-center gap-2 px-3 py-2 rounded-xl transition-all ${
-              isYou
-                ? "bg-blue-500 text-white shadow-md"
-                : "bg-white text-gray-800 shadow-sm"
-            }`}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              padding: "10px 10px",
+              borderBottom: "2px solid #1a365d",
+              background: isYou ? "#276749" : i % 2 === 0 ? "#1e4e8c" : "#1a4a7a",
+            }}
           >
-            {/* Rank */}
-            <span
-              className={`text-xs font-bold w-5 shrink-0 ${
-                isYou ? "text-blue-100" : "text-gray-400"
-              }`}
-            >
-              #{i + 1}
-            </span>
+            <span style={{
+              fontFamily: "'Fredoka One', cursive",
+              fontSize: "0.9rem",
+              color: isYou ? "#9ae6b4" : "#63b3ed",
+              width: "28px", flexShrink: 0,
+            }}>#{i + 1}</span>
 
-            {/* Avatar — no circle, raw SVG */}
-            {player.avatar ? (
-              <img
-                src={player.avatar}
-                alt={player.username}
-                style={{ width: 52, height: 52, objectFit: "contain" }}
-                className="shrink-0"
-                draggable={false}
-              />
-            ) : (
-              <span className="text-sm font-bold text-gray-500 shrink-0">
-                {player.username?.[0]?.toUpperCase()}
-              </span>
-            )}
-
-            {/* Name + Score */}
-            <div className="flex flex-col min-w-0">
-              <span className="text-sm font-semibold truncate leading-tight">
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{
+                fontWeight: 800, fontSize: "0.82rem",
+                color: isYou ? "#f0fff4" : "#ebf8ff",
+                whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
+              }}>
                 {player.username}
-                {isYou && (
-                  <span className="ml-1 text-xs font-normal text-blue-100">
-                    (You)
-                  </span>
-                )}
-              </span>
-              <span
-                className={`text-xs ${
-                  isYou ? "text-blue-200" : "text-gray-400"
-                }`}
-              >
-                {player.score ?? 0} pts
-              </span>
+                {isYou && <span style={{ marginLeft: 4, fontSize: "0.7rem", color: "#9ae6b4" }}>(You)</span>}
+              </div>
+              <div style={{ fontSize: "0.72rem", color: isYou ? "#9ae6b4" : "#63b3ed", fontWeight: 600 }}>
+                {player.score ?? 0} points
+              </div>
             </div>
+
+            {avatarSrc ? (
+              <img src={avatarSrc} alt={player.username}
+                style={{ width: 44, height: 44, objectFit: "contain", flexShrink: 0 }}
+                draggable={false} />
+            ) : (
+              <div style={{
+                width: 44, height: 44, borderRadius: "50%", background: "#2b6cb0",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontFamily: "'Fredoka One', cursive", fontSize: "1.2rem",
+                color: "#bee3f8", flexShrink: 0,
+              }}>
+                {player.username?.[0]?.toUpperCase()}
+              </div>
+            )}
           </div>
         );
       })}

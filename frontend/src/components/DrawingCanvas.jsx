@@ -1,9 +1,13 @@
 import { useEffect, useRef, useState } from "react";
+import { useGame } from "../context/GameContext";
 
 const DrawingCanvas = ({ socket, room }) => {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const prevPointRef = useRef(null);
+  
+  const { activeDrawer } = useGame();
+  const isMyTurn = activeDrawer === socket.id;
 
   const [isDrawing, setIsDrawing] = useState(false);
 
@@ -35,10 +39,19 @@ const DrawingCanvas = ({ socket, room }) => {
       context.stroke();
     });
 
-    return () => socket.off("draw_from_server");
+    socket.on("round_started", () => {
+      clearCanvas();
+    });
+
+    return () => {
+      socket.off("draw_from_server");
+      socket.off("round_started");
+    };
   }, [socket]);
 
   const startDrawing = ({ nativeEvent }) => {
+    if (!isMyTurn) return;
+
     const { offsetX, offsetY } = nativeEvent;
 
     prevPointRef.current = { x: offsetX, y: offsetY };
@@ -85,7 +98,7 @@ const DrawingCanvas = ({ socket, room }) => {
   return (
     <div>
       <canvas
-        className="w-[500px] h-[500px] border-2 border-black"
+        className={`w-[500px] h-[500px] border-2 border-black ${!isMyTurn ? 'cursor-not-allowed opacity-90' : 'cursor-crosshair'}`}
         ref={canvasRef}
         onMouseDown={startDrawing}
         onMouseMove={draw}
@@ -93,9 +106,11 @@ const DrawingCanvas = ({ socket, room }) => {
         onMouseLeave={stopDrawing}
       />
 
-      <button className="m-2 p-1 border" onClick={clearCanvas}>
-        Clear
-      </button>
+      {isMyTurn && (
+        <button className="m-2 px-4 py-1 border bg-red-100 hover:bg-red-200 text-red-700 rounded transition" onClick={clearCanvas}>
+          Clear Canvas
+        </button>
+      )}
     </div>
   );
 };
