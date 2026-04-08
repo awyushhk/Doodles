@@ -16,10 +16,12 @@ class TurnManager {
       this.turns[roomId] = {
         drawerIndex: 0,
         timerInterval: null,
+        choosingTimer: null,
         timeRemaining: 0,
         wordOptions: [],
         activeWord: null,
-        guessedCount: 0
+        guessedCount: 0,
+        turnScores: {}
       };
     }
   }
@@ -78,12 +80,36 @@ class TurnManager {
     // Send words ONLY to the drawer
     io.to(currentDrawer.id).emit("choose_word", state.wordOptions);
 
+    // AUTO-CHOOSING LOGIC:
+    // If drawer doesn't choose within 6 seconds, pick a word for them
+    this.clearChoosingTimer(roomId);
+    const choosingEndTime = Date.now() + 6000;
+    io.to(currentDrawer.id).emit("choosing_timer_start", choosingEndTime);
+
+    state.choosingTimer = setTimeout(() => {
+       if (gameManager.getGameState(roomId).state === "CHOOSING") {
+          console.log(`[${roomId}] Auto-choosing word for ${currentDrawer.username}`);
+          // Pick a random word from the options
+          const randomWord = state.wordOptions[Math.floor(Math.random() * state.wordOptions.length)];
+          this.wordSelected(io, roomId, randomWord);
+       }
+    }, 6000);
+
     console.log(`[${roomId}] Turn rotation: Drawer is ${currentDrawer.username}`);
+  }
+
+  clearChoosingTimer(roomId) {
+     if (this.turns[roomId]?.choosingTimer) {
+        clearTimeout(this.turns[roomId].choosingTimer);
+        this.turns[roomId].choosingTimer = null;
+     }
   }
 
   wordSelected(io, roomId, word) {
     const state = this.turns[roomId];
     if (!state || gameManager.getGameState(roomId).state !== "CHOOSING") return;
+
+    this.clearChoosingTimer(roomId);
 
     // Validate word is one of choices to prevent cheating
     if (!state.wordOptions.includes(word)) return;
@@ -91,7 +117,18 @@ class TurnManager {
     state.activeWord = word;
     gameManager.setState(roomId, "DRAWING");
     
+    // Notify the entire room (guessers will only use length)
     io.to(roomId).emit("word_selected", { wordLength: word.length });
+    
+    // Send the actual word only to the drawer
+    const players = roomManager.getPlayers(roomId);
+    const currentDrawer = players[state.drawerIndex];
+    if (currentDrawer) {
+      io.to(currentDrawer.id).emit("word_selected", { 
+        wordLength: word.length, 
+        word: word 
+      });
+    }
     
     this.startTimer(io, roomId);
   }
@@ -121,6 +158,7 @@ class TurnManager {
       clearInterval(this.turns[roomId].timerInterval);
       this.turns[roomId].timerInterval = null;
     }
+    this.clearChoosingTimer(roomId);
   }
 
   // Handle a guess
@@ -152,6 +190,9 @@ class TurnManager {
       const timeRemaining = Math.max(0, Math.floor((state.endTime - Date.now()) / 1000));
       const points = scoreManager.calculateGuessScore(timeRemaining, TURN_TIME);
       guesser.score += points;
+
+      state.turnScores = state.turnScores || {};
+      state.turnScores[guesser.id] = (state.turnScores[guesser.id] || 0) + points;
 
       io.to(roomId).emit("correct_guess", {
         userId: guesser.id,
@@ -186,11 +227,15 @@ class TurnManager {
     if (drawer) {
       const drawerPoints = scoreManager.calculateDrawerScore(state.guessedCount, players.length - 1);
       drawer.score += drawerPoints;
+      
+      state.turnScores = state.turnScores || {};
+      state.turnScores[drawer.id] = (state.turnScores[drawer.id] || 0) + drawerPoints;
     }
 
     const resultPayload = {
       reason,
-      word: state.activeWord
+      word: state.activeWord,
+      turnScores: state.turnScores || {}
     };
 
     io.to(roomId).emit("turn_end", resultPayload);

@@ -11,6 +11,9 @@ export const GameProvider = ({ children }) => {
   const [endTime, setEndTime] = useState(null);
   const [wordOptions, setWordOptions] = useState([]);
   const [wordLength, setWordLength] = useState(0);
+  const [activeWord, setActiveWord] = useState("");
+  const [choosingEndTime, setChoosingEndTime] = useState(null);
+  const [roundResult, setRoundResult] = useState(null);
   const [leaderboard, setLeaderboard] = useState([]);
 
   return (
@@ -20,6 +23,9 @@ export const GameProvider = ({ children }) => {
       endTime, setEndTime,
       wordOptions, setWordOptions,
       wordLength, setWordLength,
+      activeWord, setActiveWord,
+      choosingEndTime, setChoosingEndTime,
+      roundResult, setRoundResult,
       leaderboard, setLeaderboard
     }}>
       {children}

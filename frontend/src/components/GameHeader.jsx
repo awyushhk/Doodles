@@ -1,22 +1,23 @@
 import { GameState } from "../utils/constants";
+import { useGame } from "../context/GameContext";
+import logo from "../assets/Doodles logo.png";
 import "./styles/GameHeader.css";
 
 const GameHeader = ({ gameState, wordLength, drawerName, room, startGame }) => {
+  const { activeWord } = useGame();
+
   return (
     <header className="gp-header">
-      <span className="gp-logo">Doodles</span>
+      <img src={logo} alt="Doodles Logo" className="gp-logo-img" />
       
       <div className="gp-word">
            {gameState.state === GameState.DRAWING && wordLength > 0 && (
-              <span className="gp-word-text">{"_".repeat(wordLength)}</span>
+              <span className="gp-word-text">
+                {activeWord ? activeWord : "_".repeat(wordLength)}
+              </span>
            )}
            {gameState.state === GameState.LOBBY && (
               <span style={{ color: '#a0aec0', fontStyle: 'italic', fontSize: '0.9rem' }}>Waiting to start...</span>
-           )}
-           {gameState.state === GameState.CHOOSING && (
-              <span style={{ color: '#fed7aa', fontFamily: "'Fredoka One', cursive", fontSize: '1rem' }}>
-                {drawerName} is choosing a word...
-              </span>
            )}
       </div>
       

@@ -20,7 +20,19 @@
   font-family: 'Fredoka One', cursive;
   font-size: 1.6rem;
   color: #1a202c;
+  margin-bottom: 8px;
+}
+
+.wc-timer {
+  font-size: 0.9rem;
+  color: #718096;
   margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.wc-timer-number {
+  color: #e53e3e;
+  font-size: 1.1rem;
 }
 
 .wc-word-list {

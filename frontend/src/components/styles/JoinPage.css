@@ -1,0 +1,163 @@
+.jp-root {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Nunito', sans-serif;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  background: #1a365d; /* Fallback dark blue */
+}
+
+.jp-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  background-color: #2b6cb0;
+  /* Premium Hand-Drawn Doodle Pattern */
+  background-image: url("data:image/svg+xml,%3Csvg width='500' height='500' viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' opacity='0.18'%3E%3Cpath d='M40 40l15 5-5 15-15-5zM55 45l30 30-10 10-30-30z'/%3E%3Cpath d='M80 80l15 15M250 50c-20 0-30 20-10 30s10 40-20 40'/%3E%3Cpath d='M400 60a25 25 0 1 1-50 0 25 25 0 0 1 50 0zM350 60s10-10 25-10 25 10 25 10M375 35v15'/%3E%3Cpath d='M100 250c0-15 10-25 25-25s25 10 25 25-10 40-25 40-25-25-25-40zM125 290v20M115 310h20'/%3E%3Cpath d='M300 300l40-40 10 10-40 40zM330 270l20 20'/%3E%3Cpath d='M450 400l-30-30c-5-5-15-5-20 0l-40 40c-5 5-5 15 0 20l30 30'/%3E%3Cpath d='M80 420c20 0 30-20 50-20s30 20 50 20'/%3E%3Cpath d='M250 450a20 20 0 1 1 0-40 20 20 0 0 1 0 40zM230 430l40 0M250 410l0 40'/%3E%3Cpath d='M420 200l10 10-10 10 10 10-10 10'/%3E%3Cpath d='M50 150c15 0 25 10 25 25s-10 25-25 25-25-10-25-25 10-25 25-25z'/%3E%3Cpath d='M200 150l15-15 15 15-15 15z'/%3E%3Cpath d='M350 120s5 15 20 15 20-15 20-15'/%3E%3Ccircle cx='450' cy='50' r='5'/%3E%3Ccircle cx='50' cy='450' r='8'/%3E%3Cpath d='M150 20l5 5-5 5-5-5z'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 500px 500px;
+  animation: slow-scroll 10s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes slow-scroll {
+  from { background-position: 0 0; }
+  to { background-position: 500px 0; }
+}
+
+.jp-card {
+  position: relative;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(8px);
+  border: 4px solid #1a365d;
+  border-radius: 20px;
+  padding: 24px;
+  width: 90%;
+  max-width: 380px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.jp-logo-img {
+  width: 240px;
+  height: auto;
+  display: block;
+  margin: -10px auto 5px;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
+}
+
+.jp-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.jp-label {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: #1a4a7a;
+}
+
+.jp-input {
+  width: 100%;
+  border: 3px solid #bee3f8;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  color: #2d3748;
+  outline: none;
+  background: #fff;
+  transition: border-color 0.2s;
+}
+
+.jp-input:focus {
+  border-color: #2b6cb0;
+}
+
+.jp-input::placeholder {
+  color: #a0aec0;
+}
+
+.jp-room-row {
+  display: flex;
+  gap: 12px;
+}
+
+.jp-button {
+  background: #2b6cb0;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  color: white;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.1s;
+  border-bottom: 4px solid #1a365d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.jp-button:hover {
+  background: #2c5282;
+  transform: translateY(-1px);
+}
+
+.jp-button:active {
+  transform: translateY(2px);
+  border-bottom-width: 0px;
+  margin-bottom: 4px;
+}
+
+.jp-button.full-width {
+  width: 100%;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 500px) {
+  .jp-root {
+    padding: 12px;
+  }
+
+  .jp-card {
+    padding: 16px;
+    gap: 12px;
+    max-width: 320px;
+    width: 85%;
+  }
+
+  .jp-logo-img {
+    width: 180px;
+    margin-bottom: 0px;
+  }
+
+  .jp-input-group {
+    gap: 4px;
+  }
+
+  .jp-label {
+    font-size: 0.9rem;
+  }
+
+  .jp-input {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .jp-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+}

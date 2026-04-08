@@ -14,7 +14,7 @@ const LiveChat = ({ socket, room, username }) => {
     socket.on("correct_guess", ({ username: guesserName, points }) => {
       setMessages((prev) => [
          ...prev, 
-         { system: true, message: `${guesserName} guessed the word! (+${points} pts)`}
+         { system: true, message: `${guesserName} guessed the word!`}
       ]);
     });
 

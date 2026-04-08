@@ -8,6 +8,9 @@ import WordChooser from "../components/WordChooser";
 import Leaderboard from "../components/Leaderboard";
 import Timer from "../components/Timer";
 import GameHeader from "../components/GameHeader";
+import RoundResultOverlay from "../components/RoundResultOverlay";
+import ChoosingOverlay from "../components/ChoosingOverlay";
+import { GameState } from "../utils/constants";
 import { useSocket } from "../hooks/useSocket";
 import { useGame } from "../context/GameContext";
 import "../components/styles/GamePage.css";
@@ -25,7 +28,7 @@ const GamePage = () => {
   // Attach socket listeners to update GameContext
   useSocket(room);
   
-  const { gameState, wordLength, activeDrawer } = useGame();
+  const { gameState, wordLength, activeDrawer, roundResult } = useGame();
 
   const drawerPlayer = players.find(p => p.id === activeDrawer);
   const drawerName = drawerPlayer ? (drawerPlayer.id === socket.id ? "You" : drawerPlayer.username) : "Someone";
@@ -63,7 +66,13 @@ const GamePage = () => {
             <PlayerBoard players={players} currentId={socket.id} />
           </aside>
           
-          <main className="gp-center">
+          <main className="gp-center" style={{ position: 'relative' }}>
+            {gameState.state === GameState.CHOOSING && activeDrawer !== socket.id && (
+              <ChoosingOverlay drawerPlayer={drawerPlayer} />
+            )}
+            
+            <RoundResultOverlay roundResult={roundResult} players={players} />
+
             {/* The Timer usually shows on top of the canvas, float it */}
             <Timer />
             <DrawingCanvas socket={socket} room={room} />

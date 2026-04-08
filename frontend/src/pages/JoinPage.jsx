@@ -3,6 +3,8 @@ import { useState } from "react";
 import { socket } from "../socket";
 import { useNavigate } from "react-router-dom";
 import AvatarChanger from "../components/AvatarChanger";
+import logo from "../assets/Doodles logo.png";
+import "../components/styles/JoinPage.css";
 
 const JoinPage = () => {
   const [room, setRoom] = useState("");
@@ -12,52 +14,57 @@ const JoinPage = () => {
   const navigate = useNavigate();
 
   const joinRoom = () => {
-    if (room !== "") {
+    if (room.trim() !== "" && username.trim() !== "") {
       navigate("/game", { state: { username, room, avatar: selectedAvatar } });
+    } else {
+      alert("Please enter a username and room code!");
     }
   };
 
   return (
-    <div className="h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white shadow-lg rounded-xl p-8 w-96 flex flex-col gap-6">
+    <div className="jp-root">
+      <div className="jp-background" aria-hidden="true"></div>
+      <div className="jp-card">
 
-        <h1 className="text-3xl font-bold text-center">Doodles</h1>
+        <img src={logo} alt="Doodles Logo" className="jp-logo-img" />
 
         {/* Avatar Picker */}
-        <AvatarChanger
-          selectedAvatar={selectedAvatar}
-          onAvatarChange={(avatar) => setSelectedAvatar(avatar)}
-        />
+        <div className="jp-input-group">
+          <AvatarChanger
+            selectedAvatar={selectedAvatar}
+            onAvatarChange={(avatar) => setSelectedAvatar(avatar)}
+          />
+        </div>
 
         {/* Username */}
-        <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-gray-600">Username</label>
+        <div className="jp-input-group">
+          <label className="jp-label">Username</label>
           <input
-            className="border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="jp-input"
             onChange={(e) => setUsername(e.target.value)}
+            value={username}
             type="text"
-            placeholder="Enter your name"
+            placeholder="What's your name?"
           />
         </div>
 
         {/* Room */}
-        <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-gray-600">Room Code</label>
-          <div className="flex gap-3">
+        <div className="jp-input-group">
+          <label className="jp-label">Join Room</label>
+          <div className="jp-room-row">
             <input
-              className="flex-1 border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="jp-input"
               onChange={(e) => setRoom(e.target.value)}
+              value={room}
               type="text"
-              placeholder="Enter room code"
+              placeholder="Room Code"
             />
-            <button
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-              onClick={joinRoom}
-            >
-              Join
-            </button>
           </div>
         </div>
+
+        <button className="jp-button full-width" onClick={joinRoom}>
+          PLAY!
+        </button>
 
       </div>
     </div>

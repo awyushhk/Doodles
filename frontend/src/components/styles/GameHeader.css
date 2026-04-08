@@ -9,11 +9,10 @@
   height: 52px;
 }
 
-.gp-logo {
-  font-family: 'Fredoka One', cursive;
-  font-size: 1.6rem;
-  color: #fff;
-  letter-spacing: 1px;
+.gp-logo-img {
+  height: 38px;
+  width: auto;
+  display: block;
 }
 
 .gp-word {

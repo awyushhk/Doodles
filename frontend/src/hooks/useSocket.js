@@ -10,6 +10,9 @@ export const useSocket = (room) => {
     setEndTime,
     setWordOptions,
     setWordLength,
+    setActiveWord,
+    setChoosingEndTime,
+    setRoundResult,
     setLeaderboard
   } = useGame();
 
@@ -22,6 +25,9 @@ export const useSocket = (room) => {
       setActiveDrawer(drawerId);
       setGameState(state);
       setWordLength(0); // clear UI
+      setActiveWord(""); // clear old word
+      setChoosingEndTime(null);
+      setRoundResult(null); // clear old result
       setWordOptions([]);
     });
 
@@ -29,9 +35,15 @@ export const useSocket = (room) => {
       setWordOptions(words);
     });
 
-    socket.on("word_selected", ({ wordLength }) => {
+    socket.on("choosing_timer_start", (endTime) => {
+      setChoosingEndTime(endTime);
+    });
+
+    socket.on("word_selected", ({ wordLength, word }) => {
       setWordLength(wordLength);
+      if (word) setActiveWord(word);
       setWordOptions([]); // Hide overlay for drawer
+      setChoosingEndTime(null);
       setGameState(prev => ({ ...prev, state: GameState.DRAWING }));
     });
 
@@ -39,13 +51,15 @@ export const useSocket = (room) => {
       setEndTime(endTime);
     });
 
-    socket.on("turn_end", ({ reason, word }) => {
+    socket.on("turn_end", ({ reason, word, turnScores }) => {
       console.log("Turn ended because:", reason, "Word was:", word);
       setEndTime(null);
+      setRoundResult({ reason, word, turnScores });
     });
 
     socket.on("game_over", ({ leaderboard }) => {
       setGameState(prev => ({ ...prev, state: GameState.LEADERBOARD }));
+      setRoundResult(null);
       setLeaderboard(leaderboard);
     });
 
