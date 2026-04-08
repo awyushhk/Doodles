@@ -112,6 +112,21 @@ io.on("connection", (socket) => {
   socket.on("draw", (data) => {
     socket.to(data.room).emit("draw_from_server", data);
   });
+
+  socket.on("return_to_lobby", () => {
+    const room = socket.roomId;
+    if (!room) return;
+
+    // Ensure game is reset to lobby (though endGame already does this)
+    gameManager.resetGame(room);
+
+    // Broadcast state update to everyone in the room
+    io.to(room).emit("game_state_update", gameManager.getGameState(room));
+
+    // Also send player update to ensure scores look reset (0)
+    const players = roomManager.getPlayers(room);
+    io.to(room).emit("update_players", players);
+  });
 });
 
 httpServer.listen(5000, () => console.log("Server is running on 5000..."));

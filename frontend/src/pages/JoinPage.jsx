@@ -7,14 +7,20 @@ import logo from "../assets/Doodles logo.png";
 import "../components/styles/JoinPage.css";
 
 const JoinPage = () => {
-  const [room, setRoom] = useState("");
-  const [username, setUsername] = useState("");
+  const [room, setRoom] = useState(localStorage.getItem("doodle_room") || "");
+  const [username, setUsername] = useState(localStorage.getItem("doodle_username") || "");
+  const [avatarIndex, setAvatarIndex] = useState(parseInt(localStorage.getItem("doodle_avatar_index") || "0"));
   const [selectedAvatar, setSelectedAvatar] = useState(null);
 
   const navigate = useNavigate();
 
   const joinRoom = () => {
     if (room.trim() !== "" && username.trim() !== "") {
+      // Save for next time
+      localStorage.setItem("doodle_room", room);
+      localStorage.setItem("doodle_username", username);
+      localStorage.setItem("doodle_avatar_index", avatarIndex.toString());
+      
       navigate("/game", { state: { username, room, avatar: selectedAvatar } });
     } else {
       alert("Please enter a username and room code!");
@@ -31,6 +37,8 @@ const JoinPage = () => {
         {/* Avatar Picker */}
         <div className="jp-input-group">
           <AvatarChanger
+            currentIndex={avatarIndex}
+            onIndexChange={setAvatarIndex}
             selectedAvatar={selectedAvatar}
             onAvatarChange={(avatar) => setSelectedAvatar(avatar)}
           />

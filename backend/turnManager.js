@@ -57,6 +57,7 @@ class TurnManager {
     scoreManager.resetGuesses(players);
     state.guessedCount = 0;
     state.activeWord = null;
+    state.turnScores = {};
 
     const currentDrawer = players[state.drawerIndex];
     
@@ -189,7 +190,6 @@ class TurnManager {
       // Calculate score based on true time remaining
       const timeRemaining = Math.max(0, Math.floor((state.endTime - Date.now()) / 1000));
       const points = scoreManager.calculateGuessScore(timeRemaining, TURN_TIME);
-      guesser.score += points;
 
       state.turnScores = state.turnScores || {};
       state.turnScores[guesser.id] = (state.turnScores[guesser.id] || 0) + points;
@@ -223,19 +223,25 @@ class TurnManager {
     const players = roomManager.getPlayers(roomId);
     const drawer = players[state.drawerIndex];
 
+    state.turnScores = state.turnScores || {};
+
     // Give drawer points
     if (drawer) {
       const drawerPoints = scoreManager.calculateDrawerScore(state.guessedCount, players.length - 1);
-      drawer.score += drawerPoints;
-      
-      state.turnScores = state.turnScores || {};
       state.turnScores[drawer.id] = (state.turnScores[drawer.id] || 0) + drawerPoints;
     }
+
+    // Apply turn scores to actual player scores now
+    players.forEach(p => {
+       if (state.turnScores[p.id]) {
+          p.score += state.turnScores[p.id];
+       }
+    });
 
     const resultPayload = {
       reason,
       word: state.activeWord,
-      turnScores: state.turnScores || {}
+      turnScores: state.turnScores
     };
 
     io.to(roomId).emit("turn_end", resultPayload);

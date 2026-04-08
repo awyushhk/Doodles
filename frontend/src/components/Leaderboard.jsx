@@ -2,6 +2,7 @@ import { useGame } from "../context/GameContext";
 import { GameState } from "../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { svgToDataUrl } from "./AvatarChanger";
+import { socket } from "../socket";
 import "./styles/Leaderboard.css";
 
 const Leaderboard = () => {
@@ -61,9 +62,14 @@ const Leaderboard = () => {
           )}
         </div>
 
-        {/* Footer Button */}
-        <div className="lb-footer-btn" onClick={() => navigate("/")}>
-           <span className="lb-footer-text">Back to Home</span>
+        {/* Footer Buttons */}
+        <div className="lb-footer">
+          <div className="lb-footer-btn secondary" onClick={() => socket.emit("return_to_lobby")}>
+            <span className="lb-footer-text">Stay in Room</span>
+          </div>
+          <div className="lb-footer-btn primary" onClick={() => navigate("/")}>
+            <span className="lb-footer-text">Back to Home</span>
+          </div>
         </div>
 
       </div>

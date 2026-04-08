@@ -10,6 +10,7 @@ import Timer from "../components/Timer";
 import GameHeader from "../components/GameHeader";
 import RoundResultOverlay from "../components/RoundResultOverlay";
 import ChoosingOverlay from "../components/ChoosingOverlay";
+import DebugPanel from "../components/DebugPanel";
 import { GameState } from "../utils/constants";
 import { useSocket } from "../hooks/useSocket";
 import { useGame } from "../context/GameContext";
@@ -23,12 +24,11 @@ const GamePage = () => {
   }
 
   const { username, room, avatar } = location.state;
-  const [players, setPlayers] = useState([]);
   
   // Attach socket listeners to update GameContext
   useSocket(room);
   
-  const { gameState, wordLength, activeDrawer, roundResult } = useGame();
+  const { gameState, wordLength, activeDrawer, roundResult, players, setPlayers } = useGame();
 
   const drawerPlayer = players.find(p => p.id === activeDrawer);
   const drawerName = drawerPlayer ? (drawerPlayer.id === socket.id ? "You" : drawerPlayer.username) : "Someone";
@@ -83,6 +83,8 @@ const GamePage = () => {
           </aside>
         </div>
       </div>
+
+      <DebugPanel />
     </>
   );
 };

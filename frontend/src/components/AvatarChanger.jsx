@@ -8,23 +8,20 @@ const avatarList = Object.values(avatarModules);
 export const svgToDataUrl = (svgString) =>
   `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svgString)))}`;
 
-const AvatarChanger = ({ onAvatarChange, selectedAvatar }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
+const AvatarChanger = ({ onAvatarChange, selectedAvatar, currentIndex, onIndexChange }) => {
   const navigate = (dir) => {
     if (avatarList.length <= 1) return;
-    setCurrentIndex((prev) => {
-      const next = dir === "right"
-        ? (prev + 1) % avatarList.length
-        : (prev - 1 + avatarList.length) % avatarList.length;
-      onAvatarChange?.(avatarList[next]);
-      return next;
-    });
+    const next = dir === "right"
+      ? (currentIndex + 1) % avatarList.length
+      : (currentIndex - 1 + avatarList.length) % avatarList.length;
+    
+    onIndexChange?.(next);
+    onAvatarChange?.(avatarList[next]);
   };
 
   useState(() => {
     if (avatarList.length > 0 && !selectedAvatar) {
-       onAvatarChange?.(avatarList[0]);
+       onAvatarChange?.(avatarList[currentIndex]);
     }
   });
 

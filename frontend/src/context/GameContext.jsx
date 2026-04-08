@@ -15,6 +15,7 @@ export const GameProvider = ({ children }) => {
   const [choosingEndTime, setChoosingEndTime] = useState(null);
   const [roundResult, setRoundResult] = useState(null);
   const [leaderboard, setLeaderboard] = useState([]);
+  const [players, setPlayers] = useState([]);
 
   return (
     <GameContext.Provider value={{
@@ -26,7 +27,8 @@ export const GameProvider = ({ children }) => {
       activeWord, setActiveWord,
       choosingEndTime, setChoosingEndTime,
       roundResult, setRoundResult,
-      leaderboard, setLeaderboard
+      leaderboard, setLeaderboard,
+      players, setPlayers
     }}>
       {children}
     </GameContext.Provider>

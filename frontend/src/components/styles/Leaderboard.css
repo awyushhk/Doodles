@@ -113,20 +113,42 @@
   padding: 20px;
 }
 
+.lb-footer {
+  display: flex;
+  background: #e2e8f0;
+}
+
 .lb-footer-btn {
-  background: #2563eb;
+  flex: 1;
   cursor: pointer;
   padding: 16px;
   text-align: center;
-  transition: background 0.2s;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.lb-footer-btn:hover {
+.lb-footer-btn.primary {
+  background: #2563eb;
+}
+
+.lb-footer-btn.primary:hover {
   background: #1d4ed8;
+}
+
+.lb-footer-btn.secondary {
+  background: #64748b;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.lb-footer-btn.secondary:hover {
+  background: #475569;
 }
 
 .lb-footer-text {
   font-family: 'Fredoka One', cursive;
   font-size: 1.2rem;
   color: #fff;
+  white-space: nowrap;
 }
