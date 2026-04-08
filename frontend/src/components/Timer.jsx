@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useGame } from "../context/GameContext";
 import { GameState } from "../utils/constants";
 
+import "./styles/Timer.css";
+
 const Timer = () => {
   const { gameState, endTime } = useGame();
   const [displayTime, setDisplayTime] = useState(0);
@@ -20,8 +22,8 @@ const Timer = () => {
   if (gameState.state !== GameState.DRAWING) return null;
 
   return (
-    <div className="absolute top-4 right-4 bg-white shadow-md rounded-full w-16 h-16 flex items-center justify-center border-4 border-blue-500">
-      <span className="text-xl font-bold text-gray-800">{displayTime}</span>
+    <div className="timer-container">
+      <span className="timer-text">{displayTime}</span>
     </div>
   );
 };

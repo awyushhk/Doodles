@@ -1,18 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import "./styles/LiveChat.css";
 
 const LiveChat = ({ socket, room, username }) => {
   const [msg, setMsg] = useState("");
   const [messages, setMessages] = useState([]);
+  const bottomRef = useRef(null);
 
   useEffect(() => {
     socket.on("message_from_server", (data) =>
       setMessages((prev) => [...prev, data])
     );
 
-    socket.on("correct_guess", ({ username, points }) => {
+    socket.on("correct_guess", ({ username: guesserName, points }) => {
       setMessages((prev) => [
          ...prev, 
-         { system: true, message: `${username} guessed the word! (+${points} pts)`}
+         { system: true, message: `${guesserName} guessed the word! (+${points} pts)`}
       ]);
     });
 
@@ -22,49 +24,46 @@ const LiveChat = ({ socket, room, username }) => {
     };
   }, [socket]);
 
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   const sendMessage = () => {
-    if (msg !== "" && username !== "") {
-      socket.emit("message_from_client", { message: msg, room, username });
+    if (msg.trim() && username) {
+      socket.emit("message_from_client", { message: msg.trim(), room, username });
+      setMsg("");
     }
-    setMsg("");
   };
 
   return (
-    <div className="bg-white border border-gray-300 rounded-lg shadow-md w-80 h-[500px] flex flex-col">
-
-      {/* Header */}
-      <div className="px-4 py-3 border-b font-bold">
-        LIVE CHAT
+    <>
+      <div className="lc-header">LIVE CHAT</div>
+      <div className="lc-messages">
+        {messages.map((message, index) => {
+          if (message.system) {
+            return (
+              <div key={index} className="lc-msg lc-system">
+                {message.message}
+              </div>
+            );
+          }
+          return (
+            <div key={index} className={`lc-msg ${message.username === username ? "lc-mine" : ""}`}>
+              <span className="lc-sender">{message.username}:</span>
+              {message.message}
+            </div>
+          );
+        })}
+        <div ref={bottomRef} />
       </div>
-
-      {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-2">
-        {messages.map((message, index) => (
-          <div key={index} className={`text-sm ${message.system ? 'text-green-600 font-bold italic' : ''}`}>
-            {!message.system && <span className="font-semibold">{message.username}: </span>}
-            {message.message}
-          </div>
-        ))}
-      </div>
-
-      {/* Input Area */}
-      <div className="flex gap-2 p-3 border-t">
-        <input
-          className="flex-1 border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-green-400"
-          value={msg}
+      <div className="lc-footer">
+        <input className="lc-input" value={msg}
           onChange={(e) => setMsg(e.target.value)}
-          type="text"
-          placeholder="Type a message..."
-        />
-        <button
-          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition"
-          onClick={sendMessage}
-        >
-          Send
-        </button>
+          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+          type="text" placeholder="Type your guess here..." />
+        <button className="lc-send" onClick={sendMessage}>Send</button>
       </div>
-
-    </div>
+    </>
   );
 };
 

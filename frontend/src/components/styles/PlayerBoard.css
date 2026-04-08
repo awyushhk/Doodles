@@ -1,0 +1,75 @@
+.pb-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.pb-player-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 10px;
+  border-bottom: 2px solid #1a365d;
+}
+
+.pb-player-row.is-you { background: #276749; }
+.pb-player-row.is-even { background: #1e4e8c; }
+.pb-player-row.is-odd { background: #1a4a7a; }
+
+.pb-rank {
+  font-family: 'Fredoka One', cursive;
+  font-size: 0.9rem;
+  width: 28px;
+  flex-shrink: 0;
+}
+.pb-player-row.is-you .pb-rank { color: #9ae6b4; }
+.pb-player-row:not(.is-you) .pb-rank { color: #63b3ed; }
+
+.pb-info-col {
+  flex: 1;
+  min-width: 0;
+}
+
+.pb-username-wrap {
+  font-weight: 800;
+  font-size: 0.82rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pb-player-row.is-you .pb-username-wrap { color: #f0fff4; }
+.pb-player-row:not(.is-you) .pb-username-wrap { color: #ebf8ff; }
+
+.pb-you-tag {
+  margin-left: 4px;
+  font-size: 0.7rem;
+  color: #9ae6b4;
+}
+
+.pb-score-wrap {
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+.pb-player-row.is-you .pb-score-wrap { color: #9ae6b4; }
+.pb-player-row:not(.is-you) .pb-score-wrap { color: #63b3ed; }
+
+.pb-avatar-img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.pb-avatar-fallback {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #2b6cb0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.2rem;
+  color: #bee3f8;
+  flex-shrink: 0;
+}

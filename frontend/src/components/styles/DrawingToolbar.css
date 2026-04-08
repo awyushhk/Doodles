@@ -1,0 +1,53 @@
+.dc-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #1a4a7a;
+  border-bottom: 3px solid #1a365d;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+.dc-swatch {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: transform 0.12s;
+  flex-shrink: 0;
+}
+.dc-swatch:hover { transform: scale(1.2); }
+.dc-swatch.active { border-color: #fff; transform: scale(1.2); }
+.dc-swatch.is-white { box-shadow: inset 0 0 0 1px #cbd5e0; }
+
+.dc-sep { width: 2px; height: 26px; background: #2b6cb0; flex-shrink: 0; }
+
+.dc-size-label {
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #bee3f8;
+  white-space: nowrap;
+}
+
+.dc-slider {
+  width: 90px;
+  accent-color: #f6ad55;
+}
+
+.dc-clear {
+  margin-left: auto;
+  background: #c53030;
+  border: none;
+  border-radius: 8px;
+  padding: 5px 14px;
+  color: white;
+  font-family: 'Fredoka One', cursive;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.dc-clear:hover { background: #9b2c2c; }
+.dc-clear:disabled { background: #7f1d1d; cursor: not-allowed; opacity: 0.5; }

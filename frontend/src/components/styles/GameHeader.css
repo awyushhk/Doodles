@@ -1,0 +1,75 @@
+.gp-header {
+  background: #1a4a7a;
+  border-bottom: 3px solid #1a365d;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  height: 52px;
+}
+
+.gp-logo {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.6rem;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.gp-word {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  text-align: center;
+}
+
+.gp-word-text {
+  font-family: monospace;
+  font-size: 1.5rem;
+  letter-spacing: 0.5em;
+  color: #fff;
+}
+
+.gp-round {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: #bee3f8;
+}
+
+.gp-room {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #bee3f8;
+  background: #1a365d;
+  padding: 4px 12px;
+  border-radius: 999px;
+  letter-spacing: 1px;
+  margin-left: 12px;
+}
+
+.start-btn {
+  background: #48bb78;
+  color: white;
+  padding: 4px 16px;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  border-bottom: 3px solid #2f855a;
+  transition: all 0.1s;
+}
+
+.start-btn:active {
+  border-bottom-width: 0px;
+  transform: translateY(3px);
+}
+
+@media (max-width: 800px) {
+  .gp-header {
+    padding: 4px 8px;
+  }
+  .gp-logo { font-size: 1.2rem; }
+  .gp-round { font-size: 0.8rem; }
+  .gp-room { display: none; }
+}

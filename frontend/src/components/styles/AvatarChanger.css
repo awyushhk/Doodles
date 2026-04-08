@@ -1,0 +1,31 @@
+.ac-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.ac-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ac-nav-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #e2e8f0;
+  background: #f7fafc;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ac-avatar-img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}

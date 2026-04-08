@@ -1,0 +1,68 @@
+.gp-root {
+  font-family: 'Nunito', sans-serif;
+  background: #2b6cb0;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.gp-body {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.gp-players {
+  width: 200px;
+  flex-shrink: 0;
+  background: #1e4e8c;
+  border-right: 3px solid #1a365d;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.gp-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #2b6cb0;
+  overflow: hidden;
+  position: relative;
+}
+
+.gp-chat {
+  width: 280px;
+  flex-shrink: 0;
+  background: #fff;
+  border-left: 3px solid #1a365d;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Responsive Mobile Layout */
+@media (max-width: 800px) {
+  .gp-body {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "canvas canvas"
+      "players chat";
+  }
+  .gp-center { grid-area: canvas; flex: none; height: 50vh; }
+  .gp-chat { grid-area: chat; width: 100%; border-left: none; }
+  .gp-players { grid-area: players; width: 100%; padding-right: 0px; }
+}
+
+@media (max-width: 500px) {
+  .gp-body {
+    grid-template-columns: 110px 1fr;
+    grid-template-rows: auto 1fr;
+  }
+}

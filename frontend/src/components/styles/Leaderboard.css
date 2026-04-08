@@ -1,0 +1,132 @@
+.lb-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.lb-dialog {
+  background: #fff;
+  width: 90%;
+  max-width: 480px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  font-family: 'Nunito', sans-serif;
+}
+
+.lb-header {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.lb-trophy {
+  font-size: 2rem;
+}
+
+.lb-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.4rem;
+  color: #eab308;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  -webkit-text-stroke: 1px #b45309;
+}
+
+.lb-list {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #f8fafc;
+}
+
+.lb-row {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  gap: 16px;
+}
+
+.lb-row.rank-1 { background: #fef08a; border: 2px solid #ca8a04; }
+.lb-row.rank-2 { background: #f1f5f9; border: 2px solid #94a3b8; }
+.lb-row.rank-3 { background: #ffedd5; border: 2px solid #fdba74; }
+.lb-row.rank-other { background: #fff; border: 2px solid #e2e8f0; }
+
+.lb-rank-num {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.8rem;
+  color: #334155;
+  width: 40px;
+}
+
+.lb-avatar-img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.lb-avatar-fallback {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #3b82f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.lb-info-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.lb-username {
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: #1e293b;
+  text-transform: capitalize;
+}
+
+.lb-score {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #475569;
+}
+
+.lb-empty {
+  text-align: center;
+  color: #64748b;
+  padding: 20px;
+}
+
+.lb-footer-btn {
+  background: #2563eb;
+  cursor: pointer;
+  padding: 16px;
+  text-align: center;
+  transition: background 0.2s;
+}
+
+.lb-footer-btn:hover {
+  background: #1d4ed8;
+}
+
+.lb-footer-text {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.2rem;
+  color: #fff;
+}

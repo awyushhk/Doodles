@@ -64,6 +64,9 @@ class TurnManager {
 
     // Clean up any old timer
     this.clearTimer(roomId);
+    
+    // Clear the canvas for all clients for the new turn
+    io.to(roomId).emit("clear_canvas");
 
     // Notify room
     io.to(roomId).emit("round_started", {

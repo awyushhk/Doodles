@@ -1,0 +1,50 @@
+.wc-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.wc-dialog {
+  background: #fff;
+  padding: 20px 32px;
+  border-radius: 24px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.wc-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.6rem;
+  color: #1a202c;
+  margin-bottom: 16px;
+}
+
+.wc-word-list {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.wc-word-btn {
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 8px 20px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.wc-word-btn:hover {
+  transform: scale(1.05);
+}
+
+.wc-word-btn:active {
+  transform: scale(0.95);
+}

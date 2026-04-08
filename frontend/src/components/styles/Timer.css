@@ -1,0 +1,21 @@
+.timer-container {
+  position: absolute;
+  top: 60px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 4px solid #3b82f6;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.timer-text {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.4rem;
+  color: #1a202c;
+}

@@ -1,117 +1,128 @@
 import { useEffect, useRef, useState } from "react";
 import { useGame } from "../context/GameContext";
+import DrawingToolbar from "./DrawingToolbar";
+import "./styles/DrawingCanvas.css";
+
+const CANVAS_W = 800;
+const CANVAS_H = 600;
 
 const DrawingCanvas = ({ socket, room }) => {
+  const { activeDrawer } = useGame();
+  const isMyTurn = socket && activeDrawer === socket.id;
+
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const prevPointRef = useRef(null);
-  
-  const { activeDrawer } = useGame();
-  const isMyTurn = activeDrawer === socket.id;
-
   const [isDrawing, setIsDrawing] = useState(false);
+  const [color, setColor] = useState("#000000");
+  const [lineWidth, setLineWidth] = useState(5);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    canvas.width = 500;
-    canvas.height = 500;
-
-    const context = canvas.getContext("2d");
-    context.lineCap = "round";
-    context.lineJoin = "round";
-    context.strokeStyle = "black";
-    context.lineWidth = 5;
-
-    contextRef.current = context;
+    canvas.width = CANVAS_W;
+    canvas.height = CANVAS_H;
+    const ctx = canvas.getContext("2d");
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.strokeStyle = "#000000";
+    ctx.lineWidth = 5;
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
+    contextRef.current = ctx;
   }, []);
 
   useEffect(() => {
+    if (contextRef.current) {
+      contextRef.current.strokeStyle = color;
+      contextRef.current.lineWidth = lineWidth;
+    }
+  }, [color, lineWidth]);
+
+  useEffect(() => {
     if (!socket) return;
-
-    socket.on("draw_from_server", (data) => {
-      const { prevX, prevY, x, y } = data;
-
-      const context = contextRef.current;
-
-      context.beginPath();
-      context.moveTo(prevX, prevY);
-      context.lineTo(x, y);
-      context.stroke();
+    socket.on("draw_from_server", ({ prevX, prevY, x, y, color: c, lineWidth: lw }) => {
+      const ctx = contextRef.current;
+      const savedColor = ctx.strokeStyle;
+      const savedLw = ctx.lineWidth;
+      ctx.strokeStyle = c;
+      ctx.lineWidth = lw;
+      ctx.beginPath();
+      ctx.moveTo(prevX, prevY);
+      ctx.lineTo(x, y);
+      ctx.stroke();
+      ctx.strokeStyle = savedColor;
+      ctx.lineWidth = savedLw;
     });
-
-    socket.on("round_started", () => {
-      clearCanvas();
+    
+    socket.on("clear_canvas", () => {
+      const ctx = contextRef.current;
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
     });
 
     return () => {
       socket.off("draw_from_server");
-      socket.off("round_started");
+      socket.off("clear_canvas");
     };
   }, [socket]);
 
+  const toCanvasCoords = (canvas, clientX, clientY) => {
+    const rect = canvas.getBoundingClientRect();
+    return {
+      x: (clientX - rect.left) * (CANVAS_W / rect.width),
+      y: (clientY - rect.top) * (CANVAS_H / rect.height),
+    };
+  };
+
   const startDrawing = ({ nativeEvent }) => {
     if (!isMyTurn) return;
-
-    const { offsetX, offsetY } = nativeEvent;
-
-    prevPointRef.current = { x: offsetX, y: offsetY };
-
+    const { x, y } = toCanvasCoords(canvasRef.current, nativeEvent.clientX, nativeEvent.clientY);
+    prevPointRef.current = { x, y };
     contextRef.current.beginPath();
-    contextRef.current.moveTo(offsetX, offsetY);
-
+    contextRef.current.moveTo(x, y);
     setIsDrawing(true);
   };
 
   const draw = ({ nativeEvent }) => {
-    if (!isDrawing) return;
-
-    const { offsetX, offsetY } = nativeEvent;
-
-    const prevPoint = prevPointRef.current;
-
-    contextRef.current.lineTo(offsetX, offsetY);
+    if (!isDrawing || !isMyTurn) return;
+    const { x, y } = toCanvasCoords(canvasRef.current, nativeEvent.clientX, nativeEvent.clientY);
+    const prev = prevPointRef.current;
+    contextRef.current.lineTo(x, y);
     contextRef.current.stroke();
-
-    socket.emit("draw", {
-      room,
-      prevX: prevPoint?.x,
-      prevY: prevPoint?.y,
-      x: offsetX,
-      y: offsetY,
-    });
-
-    prevPointRef.current = { x: offsetX, y: offsetY };
+    socket.emit("draw", { room, prevX: prev?.x, prevY: prev?.y, x, y, color, lineWidth });
+    prevPointRef.current = { x, y };
   };
 
   const stopDrawing = () => {
-    contextRef.current.closePath();
+    contextRef.current?.closePath();
     prevPointRef.current = null;
     setIsDrawing(false);
   };
 
   const clearCanvas = () => {
-    const canvas = canvasRef.current;
-    const context = contextRef.current;
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    if (!isMyTurn) return;
+    const ctx = contextRef.current;
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
+    socket.emit("clear_canvas", { room });
   };
 
   return (
-    <div>
-      <canvas
-        className={`w-[500px] h-[500px] border-2 border-black ${!isMyTurn ? 'cursor-not-allowed opacity-90' : 'cursor-crosshair'}`}
-        ref={canvasRef}
-        onMouseDown={startDrawing}
-        onMouseMove={draw}
-        onMouseUp={stopDrawing}
-        onMouseLeave={stopDrawing}
+    <>
+      <DrawingToolbar 
+        isMyTurn={isMyTurn}
+        color={color}
+        setColor={setColor}
+        lineWidth={lineWidth}
+        setLineWidth={setLineWidth}
+        clearCanvas={clearCanvas}
       />
-
-      {isMyTurn && (
-        <button className="m-2 px-4 py-1 border bg-red-100 hover:bg-red-200 text-red-700 rounded transition" onClick={clearCanvas}>
-          Clear Canvas
-        </button>
-      )}
-    </div>
+      <div className="dc-canvas-wrap">
+        <canvas ref={canvasRef} className={`dc-canvas ${isMyTurn ? "can-draw" : "no-draw"}`}
+          onMouseDown={startDrawing} onMouseMove={draw}
+          onMouseUp={stopDrawing} onMouseLeave={stopDrawing} />
+      </div>
+    </>
   );
 };
 
