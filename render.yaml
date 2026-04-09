@@ -3,11 +3,10 @@ services:
     name: doodle-game
     runtime: node
     plan: free
-    region: oregon
     buildCommand: npm install && npm run build
     startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
       - key: NODE_VERSION
-        value: 18.0.0
+        value: 22.12.0
