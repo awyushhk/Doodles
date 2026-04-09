@@ -1,6 +1,6 @@
 import { GameState } from "../utils/constants";
 import { useGame } from "../context/GameContext";
-import logo from "../assets/Doodles logo.png";
+import logo from "../assets/Doodles-logo.png";
 import "./styles/GameHeader.css";
 
 const GameHeader = ({ gameState, wordLength, drawerName, room, startGame }) => {

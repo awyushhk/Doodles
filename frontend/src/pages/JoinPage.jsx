@@ -3,7 +3,7 @@ import { useState } from "react";
 import { socket } from "../socket";
 import { useNavigate } from "react-router-dom";
 import AvatarChanger from "../components/AvatarChanger";
-import logo from "../assets/Doodles logo.png";
+import logo from "../assets/Doodles-logo.png";
 import "../components/styles/JoinPage.css";
 
 const JoinPage = () => {

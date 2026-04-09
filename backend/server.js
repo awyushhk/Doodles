@@ -117,6 +117,10 @@ io.on("connection", (socket) => {
     socket.to(data.room).emit("draw_from_server", data);
   });
 
+  socket.on("clear_canvas", (data) => {
+    socket.to(data.room).emit("clear_canvas");
+  });
+
   socket.on("return_to_lobby", () => {
     const room = socket.roomId;
     if (!room) return;
