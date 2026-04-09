@@ -49,7 +49,7 @@
 @media (max-width: 800px) {
   .gp-body {
     display: grid;
-    grid-template-columns: 140px 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: auto 1fr;
     grid-template-areas:
       "canvas canvas"
@@ -62,7 +62,6 @@
 
 @media (max-width: 500px) {
   .gp-body {
-    grid-template-columns: 110px 1fr;
-    grid-template-rows: auto 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 }

@@ -74,9 +74,17 @@ const DrawingCanvas = ({ socket, room }) => {
     };
   };
 
+  const getCoordinates = (nativeEvent) => {
+    if (nativeEvent.touches && nativeEvent.touches.length > 0) {
+      return { clientX: nativeEvent.touches[0].clientX, clientY: nativeEvent.touches[0].clientY };
+    }
+    return { clientX: nativeEvent.clientX, clientY: nativeEvent.clientY };
+  };
+
   const startDrawing = ({ nativeEvent }) => {
     if (!isMyTurn) return;
-    const { x, y } = toCanvasCoords(canvasRef.current, nativeEvent.clientX, nativeEvent.clientY);
+    const { clientX, clientY } = getCoordinates(nativeEvent);
+    const { x, y } = toCanvasCoords(canvasRef.current, clientX, clientY);
     prevPointRef.current = { x, y };
     contextRef.current.beginPath();
     contextRef.current.moveTo(x, y);
@@ -85,7 +93,8 @@ const DrawingCanvas = ({ socket, room }) => {
 
   const draw = ({ nativeEvent }) => {
     if (!isDrawing || !isMyTurn) return;
-    const { x, y } = toCanvasCoords(canvasRef.current, nativeEvent.clientX, nativeEvent.clientY);
+    const { clientX, clientY } = getCoordinates(nativeEvent);
+    const { x, y } = toCanvasCoords(canvasRef.current, clientX, clientY);
     const prev = prevPointRef.current;
     contextRef.current.lineTo(x, y);
     contextRef.current.stroke();
@@ -120,7 +129,9 @@ const DrawingCanvas = ({ socket, room }) => {
       <div className="dc-canvas-wrap">
         <canvas ref={canvasRef} className={`dc-canvas ${isMyTurn ? "can-draw" : "no-draw"}`}
           onMouseDown={startDrawing} onMouseMove={draw}
-          onMouseUp={stopDrawing} onMouseLeave={stopDrawing} />
+          onMouseUp={stopDrawing} onMouseLeave={stopDrawing}
+          onTouchStart={startDrawing} onTouchMove={draw}
+          onTouchEnd={stopDrawing} onTouchCancel={stopDrawing} />
       </div>
     </>
   );

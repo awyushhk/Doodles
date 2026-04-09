@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 10px;
+  padding: 8px;
   border-bottom: 2px solid #1a365d;
 }
 
@@ -18,8 +18,9 @@
 
 .pb-rank {
   font-family: 'Fredoka One', cursive;
-  font-size: 0.9rem;
-  width: 28px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: right;
   flex-shrink: 0;
 }
 .pb-player-row.is-you .pb-rank { color: #9ae6b4; }
