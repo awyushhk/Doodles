@@ -19,17 +19,17 @@
   bottom: 0;
   z-index: 1;
   background-color: #2b6cb0;
-  /* Premium Hand-Drawn Doodle Pattern */
-  background-image: url("data:image/svg+xml,%3Csvg width='500' height='500' viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' opacity='0.18'%3E%3Cpath d='M40 40l15 5-5 15-15-5zM55 45l30 30-10 10-30-30z'/%3E%3Cpath d='M80 80l15 15M250 50c-20 0-30 20-10 30s10 40-20 40'/%3E%3Cpath d='M400 60a25 25 0 1 1-50 0 25 25 0 0 1 50 0zM350 60s10-10 25-10 25 10 25 10M375 35v15'/%3E%3Cpath d='M100 250c0-15 10-25 25-25s25 10 25 25-10 40-25 40-25-25-25-40zM125 290v20M115 310h20'/%3E%3Cpath d='M300 300l40-40 10 10-40 40zM330 270l20 20'/%3E%3Cpath d='M450 400l-30-30c-5-5-15-5-20 0l-40 40c-5 5-5 15 0 20l30 30'/%3E%3Cpath d='M80 420c20 0 30-20 50-20s30 20 50 20'/%3E%3Cpath d='M250 450a20 20 0 1 1 0-40 20 20 0 0 1 0 40zM230 430l40 0M250 410l0 40'/%3E%3Cpath d='M420 200l10 10-10 10 10 10-10 10'/%3E%3Cpath d='M50 150c15 0 25 10 25 25s-10 25-25 25-25-10-25-25 10-25 25-25z'/%3E%3Cpath d='M200 150l15-15 15 15-15 15z'/%3E%3Cpath d='M350 120s5 15 20 15 20-15 20-15'/%3E%3Ccircle cx='450' cy='50' r='5'/%3E%3Ccircle cx='50' cy='450' r='8'/%3E%3Cpath d='M150 20l5 5-5 5-5-5z'/%3E%3C/g%3E%3C/svg%3E");
+  /* Funky Hand-Drawn Doodle Pattern */
+  background-image: url("data:image/svg+xml,%3Csvg width='600' height='600' viewBox='0 0 600 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' opacity='0.3'%3E%3Cg transform='translate(-25, 15) rotate(-15, 75, 75)'%3E%3Cpath d='M 60 90 C 50 60 100 60 90 90 L 85 85 L 75 90 L 65 85 Z' /%3E%3Ccircle cx='70' cy='75' r='2' /%3E%3Ccircle cx='80' cy='75' r='2' /%3E%3C/g%3E%3Cg transform='translate(25, -35) rotate(10, 225, 75)'%3E%3Cpath d='M 215 75 C 245 55 245 95 215 75 L 195 60 L 195 90 Z' /%3E%3Ccircle cx='235' cy='70' r='2' /%3E%3C/g%3E%3Cg transform='translate(-15, 35) rotate(0, 375, 75)'%3E%3Cpath d='M 315 75 C 315 55 335 45 345 55 C 355 35 385 35 395 55 C 415 45 435 65 425 85 C 435 105 415 125 395 115 C 385 135 355 135 345 115 C 325 125 305 105 315 85 Z' /%3E%3C/g%3E%3Cg transform='translate(25, -15) rotate(20, 525, 75)'%3E%3Cpath d='M 525 55 L 525 95 M 505 75 L 545 75 M 510 60 L 540 90 M 510 90 L 540 60' /%3E%3C/g%3E%3Cg transform='translate(35, -25) rotate(15, 75, 225)'%3E%3Cpath d='M 75 245 C 75 245 35 225 35 195 C 35 175 65 175 75 195 C 85 175 115 175 115 195 C 115 225 75 245 75 245 Z' /%3E%3C/g%3E%3Cg transform='translate(-25, 25) rotate(-10, 225, 225)'%3E%3Ccircle cx='225' cy='225' r='25' /%3E%3Cpath d='M 185 235 C 185 210 265 205 265 230 C 265 255 185 260 185 235' /%3E%3C/g%3E%3Cg transform='translate(35, -35) rotate(45, 375, 225)'%3E%3Cpath d='M 340 225 L 410 205 L 370 265 Z M 340 225 L 370 265 L 360 245 Z M 410 205 L 360 245' /%3E%3C/g%3E%3Cg transform='translate(-25, 35) rotate(-15, 525, 225)'%3E%3Cpath d='M 500 205 L 510 230 L 525 195 L 540 230 L 550 205 L 545 245 L 505 245 Z' /%3E%3C/g%3E%3Cg transform='translate(-35, 15) rotate(10, 75, 375)'%3E%3Cpath d='M 85 345 L 85 375 C 75 375 65 385 75 395 C 85 405 95 395 95 385 L 95 355 L 115 360 L 115 350 Z' /%3E%3C/g%3E%3Cg transform='translate(35, -15) rotate(15, 225, 375)'%3E%3Cpath d='M 205 355 L 245 355 M 205 395 L 245 395 M 215 345 L 215 405 M 235 345 L 235 405' /%3E%3C/g%3E%3Cg transform='translate(-35, 25) rotate(-10, 375, 375)'%3E%3Cpath d='M 375 345 L 385 365 L 405 370 L 390 385 L 395 405 L 375 395 L 355 405 L 360 385 L 345 370 L 365 365 Z' /%3E%3C/g%3E%3Cg transform='translate(35, -25) rotate(-5, 525, 375)'%3E%3Cpath d='M 510 355 L 510 395 C 510 405 540 405 540 395 L 540 355 Z' /%3E%3Cpath d='M 540 365 C 555 365 555 385 540 385' /%3E%3Cpath d='M 515 340 C 515 345 520 350 520 350' /%3E%3Cpath d='M 530 340 C 530 345 535 350 535 350' /%3E%3C/g%3E%3Cg transform='translate(25, 25) rotate(-10, 75, 525)'%3E%3Ccircle cx='55' cy='525' r='15' /%3E%3Ccircle cx='95' cy='525' r='15' /%3E%3Cpath d='M 70 525 C 75 515 80 515 80 525' /%3E%3Cpath d='M 40 525 L 25 515 M 110 525 L 125 515' /%3E%3C/g%3E%3Cg transform='translate(-35, -25) rotate(25, 225, 525)'%3E%3Cpath d='M 205 505 L 185 525 L 195 535 L 215 515 Z' /%3E%3Cpath d='M 185 525 L 180 540 L 195 535 Z' /%3E%3Cpath d='M 182 532 L 188 538' /%3E%3C/g%3E%3Cg transform='translate(25, 35) rotate(15, 375, 525)'%3E%3Cpath d='M 395 550 C 375 540 365 510 385 490 C 345 500 345 560 395 550' /%3E%3C/g%3E%3Cg transform='translate(-25, -35) rotate(-20, 525, 525)'%3E%3Cpath d='M 525 525 C 505 505 545 485 555 515 C 565 545 515 565 495 535' /%3E%3C/g%3E%3Ccircle cx='150' cy='300' r='2' /%3E%3Ccircle cx='450' cy='150' r='3' /%3E%3Ccircle cx='300' cy='450' r='1.5' /%3E%3C/g%3E%3C/svg%3E");
   background-repeat: repeat;
-  background-size: 500px 500px;
+  background-size: 600px 600px;
   animation: slow-scroll 10s linear infinite;
   pointer-events: none;
 }
 
 @keyframes slow-scroll {
   from { background-position: 0 0; }
-  to { background-position: 500px 0; }
+  to { background-position: 600px 0; }
 }
 
 .jp-card {
@@ -159,5 +159,268 @@
   .jp-button {
     padding: 10px 20px;
     font-size: 1rem;
+  }
+}
+
+/* Side Buttons */
+.jp-side-buttons {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 20;
+}
+
+.jp-side-btn {
+  background: #fde047;
+  border: none;
+  border-radius: 12px;
+  width: 55px;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.jp-side-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  background: #fef08a;
+}
+
+.jp-side-btn:active {
+  transform: translateY(2px) scale(0.95);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.jp-side-btn svg {
+  width: 32px;
+  height: 32px;
+  color: #0ea5e9; /* Light blue icon */
+  stroke-width: 2.5;
+}
+
+/* Modal */
+.jp-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.jp-modal {
+  background: #111827; /* Dark modal */
+  border-radius: 20px;
+  width: 90%;
+  max-width: 420px;
+  padding: 24px;
+  color: white;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+}
+
+.jp-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.jp-modal-icon svg {
+  width: 32px;
+  height: 32px;
+  color: #0ea5e9;
+}
+
+.jp-modal-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.8rem;
+  flex-grow: 1;
+  margin: 0;
+}
+
+.jp-modal-close {
+  background: none;
+  border: none;
+  color: #0ea5e9;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.jp-modal-close:hover {
+  transform: scale(1.1) rotate(90deg);
+  color: #38bdf8;
+}
+
+.jp-modal-content {
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #d1d5db;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px) scale(0.95); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  .jp-side-buttons {
+    bottom: 20px;
+    top: auto;
+    right: 50%;
+    transform: translateX(50%);
+    flex-direction: row;
+  }
+}
+
+/* Contact Links */
+.jp-contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.jp-contact-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #38bdf8;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+.jp-contact-link:hover {
+  color: #7dd3fc;
+  text-decoration: underline;
+}
+
+.jp-contact-link svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* How to Play Grid */
+.jp-how-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 15px;
+  text-align: center;
+}
+
+.jp-how-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.jp-how-item p {
+  font-size: 0.9rem;
+  margin: 0;
+  color: #9ca3af;
+}
+
+.jp-how-keys {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  background: #1f2937;
+  padding: 10px;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: #d1d5db;
+}
+
+.jp-key {
+  background: #374151;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border-bottom: 2px solid #000;
+  margin-right: 4px;
+}
+
+.jp-how-visual {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+}
+
+.jp-dot {
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+}
+
+.jp-dot.small {
+  width: 10px;
+  height: 10px;
+}
+
+.jp-how-visual.warning svg {
+  width: 50px;
+  height: 50px;
+  color: #ef4444;
+}
+
+@media (max-width: 600px) {
+  .jp-how-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* Custom Scrollbar for How To Play */
+.jp-how-text::-webkit-scrollbar {
+  width: 8px;
+}
+
+.jp-how-text::-webkit-scrollbar-track {
+  background: #1f2937;
+  border-radius: 4px;
+}
+
+.jp-how-text::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 4px;
+}
+
+.jp-how-text::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+}
+
+/* Desktop Modal Positioning */
+@media (min-width: 769px) {
+  .jp-modal-overlay {
+    justify-content: flex-end;
+    padding-right: 100px;
   }
 }
