@@ -1,4 +1,6 @@
 import React from "react";
+import pencilIcon from "../assets/icons/pencil.png";
+import brushIcon from "../assets/icons/paint-brush.png";
 
 const modalData = {
   about: {
@@ -21,14 +23,14 @@ const modalData = {
       <div className="jp-how-grid">
         <div className="jp-how-item">
           <div className="jp-how-visual">
-            <img src="/src/assets/icons/pencil.png" alt="Pencil" width="50" height="50" />
+            <img src={pencilIcon} alt="Pencil" width="50" height="50" />
           </div>
           <p><strong>Draw</strong> the word to your best ability when its your turn!</p>
         </div>
         
         <div className="jp-how-item">
           <div className="jp-how-visual">
-            <img src="/src/assets/icons/paint-brush.png" alt="Fill" width="50" height="50" />
+            <img src={brushIcon} alt="Fill" width="50" height="50" />
           </div>
           <p>Otherwise, <strong>Guess</strong> the word as fast as you can to win!</p>
         </div>
