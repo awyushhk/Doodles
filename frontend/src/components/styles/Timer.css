@@ -19,3 +19,16 @@
   font-size: 1.4rem;
   color: #1a202c;
 }
+
+@media (max-width: 800px) {
+  .timer-container {
+    top: 65px;
+    right: 12px;
+    width: 46px;
+    height: 46px;
+    border-width: 3px;
+  }
+  .timer-text {
+    font-size: 1.1rem;
+  }
+}

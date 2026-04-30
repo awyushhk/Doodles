@@ -6,6 +6,91 @@ import "./styles/DrawingCanvas.css";
 const CANVAS_W = 800;
 const CANVAS_H = 600;
 
+const hexToRgb = (hex) => {
+  if (hex.length === 4) {
+    hex = '#' + hex[1] + hex[1] + hex[2] + hex[2] + hex[3] + hex[3];
+  }
+  const bigint = parseInt(hex.slice(1), 16);
+  return { r: (bigint >> 16) & 255, g: (bigint >> 8) & 255, b: bigint & 255, a: 255 };
+};
+
+const floodFill = (ctx, startX, startY, fillColorHex) => {
+  const canvasW = ctx.canvas.width;
+  const canvasH = ctx.canvas.height;
+  startX = Math.floor(startX);
+  startY = Math.floor(startY);
+
+  const imageData = ctx.getImageData(0, 0, canvasW, canvasH);
+  const data = imageData.data;
+  
+  const startPos = (startY * canvasW + startX) * 4;
+  const startR = data[startPos];
+  const startG = data[startPos + 1];
+  const startB = data[startPos + 2];
+  const startA = data[startPos + 3];
+  
+  const { r: fillR, g: fillG, b: fillB, a: fillA } = hexToRgb(fillColorHex);
+  
+  if (startR === fillR && startG === fillG && startB === fillB && startA === fillA) return;
+  
+  const matchStartColor = (pos) => {
+    return data[pos] === startR && data[pos + 1] === startG && data[pos + 2] === startB && data[pos + 3] === startA;
+  };
+  
+  const colorPixel = (pos) => {
+    data[pos] = fillR;
+    data[pos + 1] = fillG;
+    data[pos + 2] = fillB;
+    data[pos + 3] = fillA;
+  };
+  
+  const pixelStack = [[startX, startY]];
+  
+  while (pixelStack.length) {
+    const newPos = pixelStack.pop();
+    const x = newPos[0];
+    let y = newPos[1];
+    
+    let pos = (y * canvasW + x) * 4;
+    while (y-- >= 0 && matchStartColor(pos)) pos -= canvasW * 4;
+    pos += canvasW * 4;
+    ++y;
+    
+    let reachLeft = false;
+    let reachRight = false;
+    
+    while (y++ < canvasH - 1 && matchStartColor(pos)) {
+      colorPixel(pos);
+      
+      if (x > 0) {
+        if (matchStartColor(pos - 4)) {
+          if (!reachLeft) {
+            pixelStack.push([x - 1, y]);
+            reachLeft = true;
+          }
+        } else if (reachLeft) {
+          reachLeft = false;
+        }
+      }
+      
+      if (x < canvasW - 1) {
+        if (matchStartColor(pos + 4)) {
+          if (!reachRight) {
+            pixelStack.push([x + 1, y]);
+            reachRight = true;
+          }
+        } else if (reachRight) {
+          reachRight = false;
+        }
+      }
+      
+      pos += canvasW * 4;
+    }
+  }
+  
+  ctx.putImageData(imageData, 0, 0);
+};
+
 const DrawingCanvas = ({ socket, room }) => {
   const { activeDrawer } = useGame();
   const isMyTurn = socket && activeDrawer === socket.id;
@@ -14,6 +99,7 @@ const DrawingCanvas = ({ socket, room }) => {
   const contextRef = useRef(null);
   const prevPointRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
+  const [tool, setTool] = useState("draw"); // "draw" or "fill"
   const [color, setColor] = useState("#000000");
   const [lineWidth, setLineWidth] = useState(5);
 
@@ -53,6 +139,12 @@ const DrawingCanvas = ({ socket, room }) => {
       ctx.strokeStyle = savedColor;
       ctx.lineWidth = savedLw;
     });
+
+    socket.on("fill_from_server", ({ x, y, color: c }) => {
+      if (contextRef.current) {
+        floodFill(contextRef.current, x, y, c);
+      }
+    });
     
     socket.on("clear_canvas", () => {
       const ctx = contextRef.current;
@@ -62,6 +154,7 @@ const DrawingCanvas = ({ socket, room }) => {
 
     return () => {
       socket.off("draw_from_server");
+      socket.off("fill_from_server");
       socket.off("clear_canvas");
     };
   }, [socket]);
@@ -85,6 +178,13 @@ const DrawingCanvas = ({ socket, room }) => {
     if (!isMyTurn) return;
     const { clientX, clientY } = getCoordinates(nativeEvent);
     const { x, y } = toCanvasCoords(canvasRef.current, clientX, clientY);
+
+    if (tool === "fill") {
+      floodFill(contextRef.current, x, y, color);
+      socket.emit("fill", { room, x, y, color });
+      return;
+    }
+
     prevPointRef.current = { x, y };
     contextRef.current.beginPath();
     contextRef.current.moveTo(x, y);
@@ -92,7 +192,7 @@ const DrawingCanvas = ({ socket, room }) => {
   };
 
   const draw = ({ nativeEvent }) => {
-    if (!isDrawing || !isMyTurn) return;
+    if (!isDrawing || !isMyTurn || tool !== "draw") return;
     const { clientX, clientY } = getCoordinates(nativeEvent);
     const { x, y } = toCanvasCoords(canvasRef.current, clientX, clientY);
     const prev = prevPointRef.current;
@@ -120,6 +220,8 @@ const DrawingCanvas = ({ socket, room }) => {
     <>
       <DrawingToolbar 
         isMyTurn={isMyTurn}
+        tool={tool}
+        setTool={setTool}
         color={color}
         setColor={setColor}
         lineWidth={lineWidth}

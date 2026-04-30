@@ -6,7 +6,37 @@
   background: #1a4a7a;
   border-bottom: 3px solid #1a365d;
   flex-shrink: 0;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.dc-toolbar::-webkit-scrollbar {
+  display: none;
+}
+
+.dc-tools {
+  display: flex;
+  gap: 8px;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.dc-tool-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  padding: 6px;
+  cursor: pointer;
+  display: flex;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+.dc-tool-btn:hover {
+  background: #2b6cb0;
+}
+.dc-tool-btn.active {
+  background: #475569;
 }
 .dc-swatch {
   width: 26px;
@@ -29,11 +59,13 @@
   font-weight: 700;
   color: #bee3f8;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .dc-slider {
   width: 90px;
   accent-color: #f6ad55;
+  flex-shrink: 0;
 }
 
 .dc-clear {
@@ -47,6 +79,7 @@
   font-size: 0.85rem;
   cursor: pointer;
   transition: background 0.15s;
+  flex-shrink: 0;
 }
 
 .dc-clear:hover { background: #9b2c2c; }

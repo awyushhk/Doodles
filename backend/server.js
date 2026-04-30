@@ -75,6 +75,12 @@ io.on("connection", (socket) => {
     const room = socket.roomId;
     if (!room) return;
 
+    const players = roomManager.getPlayers(room);
+    if (players.length < 2) {
+      socket.emit("message_from_server", { system: true, message: "You need atleast 2 players to start the game!" });
+      return;
+    }
+
     if (gameManager.getGameState(room).state === "LOBBY") {
        turnManager.startNextTurn(io, room);
     }
@@ -115,6 +121,10 @@ io.on("connection", (socket) => {
 
   socket.on("draw", (data) => {
     socket.to(data.room).emit("draw_from_server", data);
+  });
+
+  socket.on("fill", (data) => {
+    socket.to(data.room).emit("fill_from_server", data);
   });
 
   socket.on("clear_canvas", (data) => {
